@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+
+    <parent>
+        <groupId>iuresti.training</groupId>
+        <artifactId>people-and-cars</artifactId>
+        <version>1.0-SNAPSHOT</version>
+    </parent>
+
+    <artifactId>people-and-cars-schema</artifactId>
+    <packaging>pom</packaging>
+
+    <profiles>
+        <profile>
+            <id>generate-api</id>
+            <build>
+                <plugins>
+                    <plugin>
+                        <groupId>org.openapitools</groupId>
+                        <artifactId>openapi-generator-maven-plugin</artifactId>
+                        <version>6.0.1</version>
+                        <executions>
+                            <execution>
+                                <id>generate-api</id>
+                                <goals>
+                                    <goal>generate</goal>
+                                </goals>
+                                <configuration>
+                                    <inputSpec>${project.basedir}/src/main/resources/schema.yml
+                                    </inputSpec>
+                                    <generatorName>spring</generatorName>
+                                    <configHelp>false</configHelp>
+                                    <configOptions>
+                                        <generateApis>true</generateApis>
+                                        <generateModels>true</generateModels>
+                                        <apiPackage>iuresti.training.peopleandcars.controller
+                                        </apiPackage>
+                                        <modelPackage>iuresti.training.peopleandcars.modelapi
+                                        </modelPackage>
+                                        <useRuntimeException>true</useRuntimeException>
+                                        <booleanGetterPrefix>is</booleanGetterPrefix>
+                                        <useSwaggerUI>false</useSwaggerUI>
+                                        <skipDefaultInterface>true</skipDefaultInterface>
+                                        <useTags>false</useTags>
+                                        <documentationProvider>none</documentationProvider>
+                                    </configOptions>
+                                </configuration>
+                            </execution>
+                        </executions>
+                    </plugin>
+
+                    <plugin>
+                        <artifactId>maven-resources-plugin</artifactId>
+                        <version>3.2.0</version>
+                        <executions>
+                            <execution>
+                                <id>copy-apimodel</id>
+                                <phase>install</phase>
+                                <goals>
+                                    <goal>copy-resources</goal>
+                                </goals>
+                                <configuration>
+                                    <outputDirectory>
+                                        ../service/src/main/java/iuresti/training/peopleandcars/modelapi
+                                    </outputDirectory>
+                                    <resources>
+                                        <resource>
+                                            <directory>
+                                                ${project.build.directory}/generated-sources/openapi/src/main/java/iuresti/training/peopleandcars/modelapi
+                                            </directory>
+                                            <excludes>
+                                                <exclude>ApiUtil.java</exclude>
+                                            </excludes>
+                                        </resource>
+                                    </resources>
+                                </configuration>
+                            </execution>
+                            <execution>
+                                <id>copy-controller</id>
+                                <phase>install</phase>
+                                <goals>
+                                    <goal>copy-resources</goal>
+                                </goals>
+                                <configuration>
+                                    <outputDirectory>
+                                        ../service/src/main/java/iuresti/training/peopleandcars/controller
+                                    </outputDirectory>
+                                    <resources>
+                                        <resource>
+                                            <directory>
+                                                ${project.build.directory}/generated-sources/openapi/src/main/java/iuresti/training/peopleandcars/controller
+                                            </directory>
+                                            <excludes>
+                                                <exclude>ApiUtil.java</exclude>
+                                            </excludes>
+                                        </resource>
+                                    </resources>
+                                </configuration>
+                            </execution>
+                        </executions>
+                    </plugin>
+
+                </plugins>
+            </build>
+        </profile>
+    </profiles>
+
+
+</project>
