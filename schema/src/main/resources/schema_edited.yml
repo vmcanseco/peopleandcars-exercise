@@ -1,0 +1,125 @@
+openapi: 3.0.3
+info:
+  title: People Cars - OpenAPI 3.0
+  description: |-
+    Open API for People and Cars API (Encora Traning).
+  termsOfService: http://swagger.io/terms/
+  contact:
+    email: vmcanseco@gmail.com
+  license:
+    name: Apache 2.0
+    url: http://www.apache.org/licenses/LICENSE-2.0.html
+  version: 1.0.0
+externalDocs:
+  description: Find out more about Swagger
+  url: http://swagger.io
+servers:
+  - url: http://localhost:8080/api
+tags:
+  - name: people
+    description: Opertions about People
+  - name: cars
+    description: Operations about Car
+paths:
+  /people:
+    get:
+      tags:
+        - people
+      summary: Get all people
+      description: Returns all people
+      operationId: getAllPeople
+      responses:
+        '200':
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/People'
+            application/xml:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/People'
+                xml:
+                  name: people
+  /cars:
+    get:
+      tags:
+        - cars
+      summary: Get all cars
+      description: Returns all cars
+      operationId: getAllCars
+      responses:
+        '200':
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Car'
+            application/xml:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Car'
+components:
+  schemas:
+    Car:
+      type: object
+      properties:
+        vin:
+          type: string
+          example: 00000100001
+        brand:
+          type: string
+          example: ford
+        model:
+          type: string
+          example: ikon
+        color:
+          type: string
+          example: red
+        year:
+          type: integer
+          format: int16
+      xml:
+        name: car
+    People:
+      required:
+        - firstName
+        - lastName
+        - email
+        - gender
+      type: object
+      properties:
+        id:
+          type: string
+          example: 07327fea-c992-4c90-a57d-ab70c482bb71
+        firstName:
+          type: string
+          example: John
+        lastName:
+          type: string
+          example: Doe
+        email:
+          type: string
+          example: mymail@mail.com
+        gender:
+          type: string
+          example: female
+          enum:
+            - male
+            - famale
+            - non-binary
+            - fluid
+        cars:
+          type: array
+          xml:
+            wrapped: true
+          items:
+            $ref: '#/components/schemas/Car'
+      xml:
+        name: people
