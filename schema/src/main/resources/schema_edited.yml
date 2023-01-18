@@ -21,7 +21,187 @@ tags:
   - name: cars
     description: Operations about Car
 paths:
+  /people/{person_id}:
+    get:
+      tags:
+        - people
+      summary: Find person by Id
+      description: Return a single person
+      operationId: getPersonById
+      parameters:
+        - name: person_id
+          in: path
+          description: Person Id
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Successfull operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/People'
+            application/xml:
+              schema:
+                $ref: '#/components/schemas/People'
+        '404':
+          description: Person not found
+    put:
+      tags:
+        - people
+      summary: Update an existing person
+      description: Upate an existing person
+      operationId: updatePerson
+      parameters:
+        - name: person_id
+          in: path
+          description: Person Id
+          required: true
+          schema:
+            type: string
+      requestBody:
+        required: true
+        description: Update a person
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/People'
+          application/xml:
+            schema:
+              $ref: '#/components/schemas/People'
+      responses:
+        '200':
+          description: Successfull operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/People'
+            application/xml:
+              schema:
+                $ref: '#/components/schemas/People'
+        '404':
+          description: Person not found
+    delete:
+      tags:
+        - people
+      summary: Delete a person by Id
+      description: Delete a person by Id
+      operationId: deletePerson
+      parameters:
+        - name: person_id
+          in: path
+          description: Person Id
+          required: true
+          schema:
+            type: string
+      responses:
+        '204':
+          description: Successfull operation
+        '404':
+          description: Person not found
+  /people/{person_id}/car:
+    get:
+      tags:
+        - people
+      summary: Find all person's cars
+      description: Returns all cars beloging to a person
+      operationId: getPersonCars
+      parameters:
+        - name: person_id
+          in: path
+          description: Person Id
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Successfull operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Car'
+            application/xml:
+              schema:
+                $ref: '#/components/schemas/Car'
+        '404':
+          description: Person not found
+    post:
+      tags:
+        - people
+      summary: Link car to a person
+      description: Link car to a person
+      operationId: addCar
+      parameters:
+        - name: person_id
+          in: path
+          description: Person Id
+          required: true
+          schema:
+            type: string
+      requestBody:
+        required: true
+        description: Add car to a person
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Car'
+          application/xml:
+            schema:
+              $ref: '#/components/schemas/Car'
+      responses:
+        '200':
+          description: Successfull operation
+        '404':
+          description: Person not found
+    delete:
+      tags:
+        - people
+      summary: Remove car from a person
+      description: Remove car to a person
+      operationId: removeCar
+      parameters:
+        - name: person_id
+          in: path
+          description: Person Id
+          required: true
+          schema:
+            type: string
+      responses:
+        '204':
+          description: Successfull operation
+        '404':
+          description: Person not found
+
   /people:
+    post:
+      tags:
+        - people
+      summary: Add a new person
+      description: Create a person
+      operationId: createPerson
+      requestBody:
+        required: true
+        description: Create a person
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/People'
+          application/xml:
+            schema:
+              $ref: '#/components/schemas/People'
+      responses:
+        '201':
+          description: Successfull operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/People'
+            application/xml:
+              schema:
+                $ref: '#/components/schemas/People'
+        '500':
+          description: Unexpected errror
     get:
       tags:
         - people
