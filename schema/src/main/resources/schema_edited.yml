@@ -120,10 +120,16 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/Car'
+                type: array
+                items:
+                  $ref: '#/components/schemas/Car'
             application/xml:
               schema:
-                $ref: '#/components/schemas/Car'
+                type: array
+                items:
+                  $ref: '#/components/schemas/Car'
+                xml:
+                  name: car
         '404':
           description: Person not found
     post:
@@ -245,6 +251,145 @@ paths:
                 type: array
                 items:
                   $ref: '#/components/schemas/Car'
+    post:
+      tags:
+        - cars
+      summary: Add a new car
+      description: Create a car
+      operationId: createCar
+      requestBody:
+        required: true
+        description: Create a Car
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Car'
+          application/xml:
+            schema:
+              $ref: '#/components/schemas/Car'
+      responses:
+        '201':
+          description: Successfull operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Car'
+            application/xml:
+              schema:
+                $ref: '#/components/schemas/Car'
+        '500':
+          description: Unexpected errror
+  /cars/{car_vin}:
+    get:
+      tags:
+        - cars
+      summary: Find car by VIN
+      description: Return a single car
+      operationId: getCarByVin
+      parameters:
+        - name: car_vin
+          in: path
+          description: Car VIN
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Successfull operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Car'
+            application/xml:
+              schema:
+                $ref: '#/components/schemas/Car'
+        '404':
+          description: Car not found
+    put:
+      tags:
+        - cars
+      summary: Update an existing car
+      description: Upate an existing car
+      operationId: updateCar
+      parameters:
+        - name: car_vin
+          in: path
+          description: Car VIN
+          required: true
+          schema:
+            type: string
+      requestBody:
+        required: true
+        description: Update a car
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Car'
+          application/xml:
+            schema:
+              $ref: '#/components/schemas/Car'
+      responses:
+        '200':
+          description: Successfull operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Car'
+            application/xml:
+              schema:
+                $ref: '#/components/schemas/Car'
+        '404':
+          description: Car not found
+    delete:
+      tags:
+        - cars
+      summary: Delete a car by VIN
+      description: Delete a person by VIN
+      operationId: deleteCar
+      parameters:
+        - name: car_vin
+          in: path
+          description: Car VIN
+          required: true
+          schema:
+            type: string
+      responses:
+        '204':
+          description: Successfull operation
+        '404':
+          description: Car not found
+  /car/{car_vin}/people:
+    get:
+      tags:
+        - cars
+      summary: Find all people owning a car
+      description: Returns all people associate to a car
+      operationId: getAllCarPeople
+      parameters:
+        - name: car_vin
+          in: path
+          description: Car VIN
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Successfull operation
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/People'
+            application/xml:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/People'
+                xml:
+                  name: people
+        '404':
+          description: Car not found
 components:
   schemas:
     Car:
