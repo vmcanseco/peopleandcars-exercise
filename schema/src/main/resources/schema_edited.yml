@@ -440,11 +440,11 @@ components:
             - famale
             - non-binary
             - fluid
-        cars:
-          type: array
-          xml:
-            wrapped: true
-          items:
-            $ref: '#/components/schemas/Car'
+        #cars:
+        #  type: array
+        #  xml:
+        #    wrapped: true
+        #  items:
+        #    $ref: '#/components/schemas/Car'
       xml:
         name: people
