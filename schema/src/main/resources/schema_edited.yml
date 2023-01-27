@@ -358,7 +358,7 @@ paths:
           description: Successfull operation
         '404':
           description: Car not found
-  /car/{car_vin}/people:
+  /cars/{car_vin}/people:
     get:
       tags:
         - cars

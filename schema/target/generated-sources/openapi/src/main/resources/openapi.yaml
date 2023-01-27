@@ -1,0 +1,527 @@
+openapi: 3.0.3
+info:
+  contact:
+    email: vmcanseco@gmail.com
+  description: Open API for People and Cars API (Encora Traning).
+  license:
+    name: Apache 2.0
+    url: http://www.apache.org/licenses/LICENSE-2.0.html
+  termsOfService: http://swagger.io/terms/
+  title: People Cars - OpenAPI 3.0
+  version: 1.0.0
+externalDocs:
+  description: Find out more about Swagger
+  url: http://swagger.io
+servers:
+- url: http://localhost:8080/api
+tags:
+- description: Opertions about People
+  name: people
+- description: Operations about Car
+  name: cars
+paths:
+  /people/{person_id}:
+    delete:
+      description: Delete a person by Id
+      operationId: deletePerson
+      parameters:
+      - description: Person Id
+        explode: false
+        in: path
+        name: person_id
+        required: true
+        schema:
+          type: string
+        style: simple
+      responses:
+        "204":
+          description: Successfull operation
+        "404":
+          description: Person not found
+      summary: Delete a person by Id
+      tags:
+      - people
+      x-accepts: application/json
+      x-tags:
+      - tag: people
+    get:
+      description: Return a single person
+      operationId: getPersonById
+      parameters:
+      - description: Person Id
+        explode: false
+        in: path
+        name: person_id
+        required: true
+        schema:
+          type: string
+        style: simple
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/People'
+            application/xml:
+              schema:
+                $ref: '#/components/schemas/People'
+          description: Successfull operation
+        "404":
+          description: Person not found
+      summary: Find person by Id
+      tags:
+      - people
+      x-accepts: application/json
+      x-tags:
+      - tag: people
+    put:
+      description: Upate an existing person
+      operationId: updatePerson
+      parameters:
+      - description: Person Id
+        explode: false
+        in: path
+        name: person_id
+        required: true
+        schema:
+          type: string
+        style: simple
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/People'
+          application/xml:
+            schema:
+              $ref: '#/components/schemas/People'
+        description: Update a person
+        required: true
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/People'
+            application/xml:
+              schema:
+                $ref: '#/components/schemas/People'
+          description: Successfull operation
+        "404":
+          description: Person not found
+      summary: Update an existing person
+      tags:
+      - people
+      x-content-type: application/json
+      x-accepts: application/json
+      x-tags:
+      - tag: people
+  /people/{person_id}/car:
+    delete:
+      description: Remove car to a person
+      operationId: removeCar
+      parameters:
+      - description: Person Id
+        explode: false
+        in: path
+        name: person_id
+        required: true
+        schema:
+          type: string
+        style: simple
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Car'
+          application/xml:
+            schema:
+              $ref: '#/components/schemas/Car'
+        description: Car to be removed
+        required: true
+      responses:
+        "204":
+          description: Successfull operation
+        "404":
+          description: Person not found
+      summary: Remove car from a person
+      tags:
+      - people
+      x-content-type: application/json
+      x-accepts: application/json
+      x-tags:
+      - tag: people
+    get:
+      description: Returns all cars beloging to a person
+      operationId: getPersonCars
+      parameters:
+      - description: Person Id
+        explode: false
+        in: path
+        name: person_id
+        required: true
+        schema:
+          type: string
+        style: simple
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                items:
+                  $ref: '#/components/schemas/Car'
+                type: array
+            application/xml:
+              schema:
+                items:
+                  $ref: '#/components/schemas/Car'
+                type: array
+                xml:
+                  name: car
+          description: Successfull operation
+        "404":
+          description: Person not found
+      summary: Find all person's cars
+      tags:
+      - people
+      x-accepts: application/json
+      x-tags:
+      - tag: people
+    post:
+      description: Link car to a person
+      operationId: addCar
+      parameters:
+      - description: Person Id
+        explode: false
+        in: path
+        name: person_id
+        required: true
+        schema:
+          type: string
+        style: simple
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Car'
+          application/xml:
+            schema:
+              $ref: '#/components/schemas/Car'
+        description: Add car to a person
+        required: true
+      responses:
+        "200":
+          description: Successfull operation
+        "404":
+          description: Person not found
+      summary: Link car to a person
+      tags:
+      - people
+      x-content-type: application/json
+      x-accepts: application/json
+      x-tags:
+      - tag: people
+  /people:
+    get:
+      description: Returns all people
+      operationId: getAllPeople
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                items:
+                  $ref: '#/components/schemas/People'
+                type: array
+            application/xml:
+              schema:
+                items:
+                  $ref: '#/components/schemas/People'
+                type: array
+                xml:
+                  name: people
+          description: successful operation
+      summary: Get all people
+      tags:
+      - people
+      x-accepts: application/json
+      x-tags:
+      - tag: people
+    post:
+      description: Create a person
+      operationId: createPerson
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/People'
+          application/xml:
+            schema:
+              $ref: '#/components/schemas/People'
+        description: Create a person
+        required: true
+      responses:
+        "201":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/People'
+            application/xml:
+              schema:
+                $ref: '#/components/schemas/People'
+          description: Successfull operation
+        "500":
+          description: Unexpected errror
+      summary: Add a new person
+      tags:
+      - people
+      x-content-type: application/json
+      x-accepts: application/json
+      x-tags:
+      - tag: people
+  /cars:
+    get:
+      description: Returns all cars
+      operationId: getAllCars
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                items:
+                  $ref: '#/components/schemas/Car'
+                type: array
+            application/xml:
+              schema:
+                items:
+                  $ref: '#/components/schemas/Car'
+                type: array
+          description: successful operation
+      summary: Get all cars
+      tags:
+      - cars
+      x-accepts: application/json
+      x-tags:
+      - tag: cars
+    post:
+      description: Create a car
+      operationId: createCar
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Car'
+          application/xml:
+            schema:
+              $ref: '#/components/schemas/Car'
+        description: Create a Car
+        required: true
+      responses:
+        "201":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Car'
+            application/xml:
+              schema:
+                $ref: '#/components/schemas/Car'
+          description: Successfull operation
+        "500":
+          description: Unexpected errror
+      summary: Add a new car
+      tags:
+      - cars
+      x-content-type: application/json
+      x-accepts: application/json
+      x-tags:
+      - tag: cars
+  /cars/{car_vin}:
+    delete:
+      description: Delete a person by VIN
+      operationId: deleteCar
+      parameters:
+      - description: Car VIN
+        explode: false
+        in: path
+        name: car_vin
+        required: true
+        schema:
+          type: string
+        style: simple
+      responses:
+        "204":
+          description: Successfull operation
+        "404":
+          description: Car not found
+      summary: Delete a car by VIN
+      tags:
+      - cars
+      x-accepts: application/json
+      x-tags:
+      - tag: cars
+    get:
+      description: Return a single car
+      operationId: getCarByVin
+      parameters:
+      - description: Car VIN
+        explode: false
+        in: path
+        name: car_vin
+        required: true
+        schema:
+          type: string
+        style: simple
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Car'
+            application/xml:
+              schema:
+                $ref: '#/components/schemas/Car'
+          description: Successfull operation
+        "404":
+          description: Car not found
+      summary: Find car by VIN
+      tags:
+      - cars
+      x-accepts: application/json
+      x-tags:
+      - tag: cars
+    put:
+      description: Upate an existing car
+      operationId: updateCar
+      parameters:
+      - description: Car VIN
+        explode: false
+        in: path
+        name: car_vin
+        required: true
+        schema:
+          type: string
+        style: simple
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Car'
+          application/xml:
+            schema:
+              $ref: '#/components/schemas/Car'
+        description: Update a car
+        required: true
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Car'
+            application/xml:
+              schema:
+                $ref: '#/components/schemas/Car'
+          description: Successfull operation
+        "404":
+          description: Car not found
+      summary: Update an existing car
+      tags:
+      - cars
+      x-content-type: application/json
+      x-accepts: application/json
+      x-tags:
+      - tag: cars
+  /cars/{car_vin}/people:
+    get:
+      description: Returns all people associate to a car
+      operationId: getAllCarPeople
+      parameters:
+      - description: Car VIN
+        explode: false
+        in: path
+        name: car_vin
+        required: true
+        schema:
+          type: string
+        style: simple
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                items:
+                  $ref: '#/components/schemas/People'
+                type: array
+            application/xml:
+              schema:
+                items:
+                  $ref: '#/components/schemas/People'
+                type: array
+                xml:
+                  name: people
+          description: Successfull operation
+        "404":
+          description: Car not found
+      summary: Find all people owning a car
+      tags:
+      - cars
+      x-accepts: application/json
+      x-tags:
+      - tag: cars
+components:
+  schemas:
+    Car:
+      example:
+        color: red
+        year: 0
+        vin: "32769"
+        model: ikon
+        brand: ford
+      properties:
+        vin:
+          example: "32769"
+          type: string
+        brand:
+          example: ford
+          type: string
+        model:
+          example: ikon
+          type: string
+        color:
+          example: red
+          type: string
+        year:
+          format: int16
+          type: integer
+      type: object
+      xml:
+        name: car
+    People:
+      example:
+        firstName: John
+        lastName: Doe
+        gender: female
+        id: 07327fea-c992-4c90-a57d-ab70c482bb71
+        email: mymail@mail.com
+      properties:
+        id:
+          example: 07327fea-c992-4c90-a57d-ab70c482bb71
+          type: string
+        firstName:
+          example: John
+          type: string
+        lastName:
+          example: Doe
+          type: string
+        email:
+          example: mymail@mail.com
+          type: string
+        gender:
+          example: female
+          type: string
+      required:
+      - email
+      - firstName
+      - gender
+      - lastName
+      type: object
+      xml:
+        name: people
